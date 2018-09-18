@@ -11,8 +11,8 @@ curr_dir = os.getcwd()
 i = 1
 for files in glob("D_aligned_20000/mnodes*.pdb"):
 	cmd.load(files,"mnodes")
-	cmd.align('a_1d3z','/mnodes//c')
-	cmd.align('b_1d3z','/mnodes//d')
+	cmd.align('a_1d3z','/mnodes//A')
+	cmd.align('b_1d3z','/mnodes//B')
 	cmd.save('myalign/ali_' + str(i) +'.pdb')
 	cmd.delete(all)
 	i += 1
