@@ -11,14 +11,13 @@ function [Chi_2] = svd_solver(guess, pdb_coor, pcs_exp, out_pcs_file, out_chi_fi
 %construct A matrix
 para_center = guess;
 num_res = length(pcs_exp);
-pcs_exp = pcs_exp;
 A = zeros(num_res,5);
 pdb_x = pdb_coor(:,1);
-x = pdb_x - para_center(1);
+x = (pdb_x - para_center(1))*10^-10;
 pdb_y = pdb_coor(:,2);
-y = pdb_y - para_center(2);
+y = (pdb_y - para_center(2))*10^-10;
 pdb_z = pdb_coor(:,3);
-z = pdb_z - para_center(3);
+z = (pdb_z - para_center(3))*10^-10;
 r_sqr = x.^2 + y.^2 +z.^2;
 if which_chi == 'zz'
     A(:,1)=(1./r_sqr.^2.5 * 1/(4 * pi)) .* [x.^2 - z.^2];
@@ -33,7 +32,7 @@ elseif which_chi == 'xx'
     A(:,4)=(1./r_sqr.^2.5 * 1/(4 * pi)) .* (2*y.*z); 
     A(:,5)=(1./r_sqr.^2.5 * 1/(4 * pi)) .* (z.^2 - x.^2); 
 elseif which_chi == 'yy'
-    fprintf('underconstruction')
+    fprintf('underconstruction');
 else
     fprintf('which_chi could only be xx,yy or zz, others are not supported');
 %SVD

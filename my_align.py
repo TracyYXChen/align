@@ -3,17 +3,20 @@ from pymol.cgo import *
 from pymol import cmd
 from glob import glob
 
-cmd.load('mobile_pdb/a_1d.pdb','a_1d3z')
+
 #chain z
-cmd.load('mobile_pdb/b_1d.pdb','b_1d3z')
+#cmd.load('mobile_pdb/b_1d.pdb','b_1d3z')
 #chain y
 curr_dir = os.getcwd()
+#for files in glob("D_aligned_20000/mnodes*.pdb"):
 i = 1
 for files in glob("D_aligned_20000/mnodes*.pdb"):
-	cmd.load(files,"mnodes")
-	cmd.align('a_1d3z','/mnodes//A')
-	cmd.align('b_1d3z','/mnodes//B')
-	cmd.save('yxc_aln/ali_' + str(i) +'.pdb')
-	cmd.delete(all)
+	print(files)
+	cmd.load('test_D/new_B.pdb','new_dimer')
+	cmd.load(files,"mnodes%s"%str(i),state=1)
+	#cmd.align('a_1d3z','/mnodes//A')
+	cmd.align('/mnodes%s//B'%str(i),'/new_dimer//a', mobile_state=1, target_state=1)
+	cmd.save('B_aln/B_aln_%s.pdb'%str(i))
+	cmd.delete('new_dimer')
+	cmd.delete('/mnodes%s//A'%str(i))
 	i += 1
-
